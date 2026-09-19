@@ -1,0 +1,8 @@
+issue_trackers:
+  - label: Data
+    description: Missing data, misspellings, or invalid records
+    url: https://github.com/Shanetiltongc/Ceraphronoidea-of-the-World/issues/new
+
+  - label: Website
+    description: A link, panel, or other feature is not working as expected
+    url: https://github.com/Shanetiltongc/Ceraphronoidea-of-the-World/issues/new

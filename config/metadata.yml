@@ -1,0 +1,10 @@
+---
+# SEO and page metadata
+
+metadata:
+  - name: description
+    content: Taxon pages for the superfamily Ceraphronoidea (Hymenoptera), served from TaxonWorks.
+  - name: keywords
+    content: Ceraphronoidea, Ceraphronidae, Megaspilidae, Stigmaphronidae, Hymenoptera, TaxonWorks
+  - name: robots
+    content: follow

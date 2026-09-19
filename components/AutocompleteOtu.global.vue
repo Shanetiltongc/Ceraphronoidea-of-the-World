@@ -1,0 +1,34 @@
+<template>
+  <Autocomplete
+    url="/otus/autocomplete"
+    query-param="term"
+    label="label_html"
+    :autofocus="autofocus"
+    :params="{ with_taxon_name: true }"
+    @select="loadOtu"
+  />
+</template>
+
+<script setup>
+import { useRouter } from 'vue-router'
+import Autocomplete from '@/components/Autocomplete/Autocomplete.global.vue'
+import { defaultTabRouteName } from '@/modules/otus/router/index.js'
+
+const router = useRouter()
+
+const props = defineProps({
+  autofocus: {
+    type: Boolean,
+    default: false
+  }
+})
+
+const loadOtu = ({ id, otu_valid_id }) => {
+  router.push({
+    name: defaultTabRouteName,
+    params: {
+      id: otu_valid_id || id
+    }
+  })
+}
+</script>

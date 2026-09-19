@@ -1,0 +1,8 @@
+# Router configuration
+#
+# Local development (npm run dev) uses the site root.
+# GitHub Pages at https://shanetiltongc.github.io/Ceraphronoidea-of-the-World/
+# sets base_url to /Ceraphronoidea-of-the-World/ in the deploy workflow.
+
+base_url: /
+hash_mode: true

@@ -1,0 +1,6 @@
+# TaxonWorks API configuration
+# Public project token only (not a user token). Used by the frontend to
+# read Ceraphronoidea data from TaxonWorks.
+
+url: https://sfg.taxonworks.org/api/v1
+project_token: zx8e41rms1gvDXyzDUE8Hg
