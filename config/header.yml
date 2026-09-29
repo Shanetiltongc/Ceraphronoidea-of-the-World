@@ -1,7 +1,7 @@
 ---
 # Navigation header configuration
 
-header_logo_url: ''
+header_logo_url: /images/header-logo-tubifer.png?v=cut-flip
 header_logo_text: 'Ceraphronoidea of the World'
 header_links:
   - label: Home
@@ -12,6 +12,9 @@ header_links:
 
   - label: Bibliography
     link: /resources/tw/filter/bibliography
+
+  - label: Keys
+    link: /keys
 
   - label: About
     link: /about
