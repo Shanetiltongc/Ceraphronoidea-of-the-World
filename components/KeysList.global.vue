@@ -2,8 +2,7 @@
   <div class="cow-keys">
     <h1 class="cow-keys__heading">Keys</h1>
     <p class="cow-keys__intro">
-      Illustrated identification keys. Open a key, then work one couplet at a
-      time: two statements, pick the one that matches your specimen.
+      Open a key, then pick one of the two statements at each step.
     </p>
 
     <div class="cow-keys-search">

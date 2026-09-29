@@ -725,21 +725,13 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   padding: 0.1rem 0.55rem;
 }
 
-.cow-key-help,
-.cow-key-prompt {
-  max-width: 42rem;
+.cow-key-help {
+  max-width: 36rem;
   margin: 0 auto 1rem;
   text-align: center;
   color: var(--cow-muted);
   font-size: 0.95rem;
-  line-height: 1.45;
-}
-
-.cow-key-prompt {
-  margin-top: 0.25rem;
-  margin-bottom: 0.75rem;
-  color: var(--tp-base-content);
-  font-weight: 600;
+  line-height: 1.4;
 }
 
 /* Pinpoint key viewer. Its own CSS loads later at the same specificity and
@@ -777,8 +769,15 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   line-height: 1.45;
 }
 
-.pinpoint-app .pinpoint-node-children-container .pinpoint-tree {
+.pinpoint-app .pinpoint-tree,
+.pinpoint-app .pinpoint-node-children-container .pinpoint-tree,
+.pinpoint-app ul.pinpoint-tree {
   display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .pinpoint-app .pinpoint-node-next-container {

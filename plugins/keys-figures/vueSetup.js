@@ -91,25 +91,36 @@ function relabelButton(button, label) {
   if (icons[1]) row.appendChild(icons[1])
 }
 
+function hideRemainingKeyDump(app) {
+  app.querySelectorAll('.pinpoint-node-children-container .pinpoint-tree').forEach((tree) => {
+    tree.setAttribute('hidden', '')
+    tree.setAttribute('aria-hidden', 'true')
+    tree.style.setProperty('display', 'none', 'important')
+  })
+}
+
+function enlargeFigures(app) {
+  app.querySelectorAll('.pinpoint-figure').forEach((img) => {
+    img.style.setProperty('width', '100%', 'important')
+    img.style.setProperty('height', 'auto', 'important')
+    img.style.setProperty('max-height', '32rem', 'important')
+  })
+}
+
 function enhanceKeyUi() {
   const app = document.querySelector('.pinpoint-app')
   if (!app) return
+
+  hideRemainingKeyDump(app)
+  enlargeFigures(app)
 
   const title = app.querySelector('.pinpoint-key-title')
   if (title && !app.querySelector('.cow-key-help')) {
     const help = document.createElement('p')
     help.className = 'cow-key-help'
-    help.innerHTML =
-      'This is a <strong>dichotomous key</strong>: one question at a time, with two choices. Compare your specimen to the statements and figures. Click a figure to enlarge it. Choose the side that matches, then click <strong>This matches</strong>. A genus name is the identification. Use <strong>Previous step</strong> to undo.'
+    help.textContent =
+      'Pick the side that matches your specimen, then click This matches.'
     title.insertAdjacentElement('afterend', help)
-  }
-
-  const pair = app.querySelector('.pinpoint-couplet-children-container')
-  if (pair && !app.querySelector('.cow-key-prompt')) {
-    const prompt = document.createElement('p')
-    prompt.className = 'cow-key-prompt'
-    prompt.textContent = 'Which statement matches your specimen?'
-    pair.insertAdjacentElement('beforebegin', prompt)
   }
 
   app.querySelectorAll('.pinpoint-node-next-button').forEach((button) => {
