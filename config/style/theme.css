@@ -586,7 +586,15 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   font-family: var(--cow-font-display);
   font-weight: 600;
   font-size: 1.75rem;
-  margin: 0 0 1rem;
+  margin: 0 0 0.5rem;
+}
+
+.cow-keys__intro {
+  margin: 0 0 1.15rem;
+  max-width: 40rem;
+  color: var(--cow-muted);
+  font-size: 0.95rem;
+  line-height: 1.45;
 }
 
 .cow-keys-search {
@@ -715,6 +723,23 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   border: 1px solid var(--tp-base-border);
   border-radius: 999px;
   padding: 0.1rem 0.55rem;
+}
+
+.cow-key-help,
+.cow-key-prompt {
+  max-width: 42rem;
+  margin: 0 auto 1rem;
+  text-align: center;
+  color: var(--cow-muted);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.cow-key-prompt {
+  margin-top: 0.25rem;
+  margin-bottom: 0.75rem;
+  color: var(--tp-base-content);
+  font-weight: 600;
 }
 
 /* Pinpoint key viewer. Its own CSS loads later at the same specificity and

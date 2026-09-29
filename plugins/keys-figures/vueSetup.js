@@ -74,6 +74,75 @@ function patchFetch() {
   }
 }
 
+function relabelButton(button, label) {
+  if (!button) return
+  if (button.textContent.includes(label)) {
+    button.setAttribute('data-cow-label', label)
+    button.setAttribute('aria-label', label)
+    return
+  }
+  button.setAttribute('data-cow-label', label)
+  button.setAttribute('aria-label', label)
+  const row = button.querySelector('.flex') || button
+  const icons = [...row.querySelectorAll('svg')]
+  while (row.firstChild) row.removeChild(row.firstChild)
+  if (icons[0]) row.appendChild(icons[0])
+  row.appendChild(document.createTextNode(` ${label} `))
+  if (icons[1]) row.appendChild(icons[1])
+}
+
+function enhanceKeyUi() {
+  const app = document.querySelector('.pinpoint-app')
+  if (!app) return
+
+  const title = app.querySelector('.pinpoint-key-title')
+  if (title && !app.querySelector('.cow-key-help')) {
+    const help = document.createElement('p')
+    help.className = 'cow-key-help'
+    help.innerHTML =
+      'This is a <strong>dichotomous key</strong>: one question at a time, with two choices. Compare your specimen to the statements and figures. Click a figure to enlarge it. Choose the side that matches, then click <strong>This matches</strong>. A genus name is the identification. Use <strong>Previous step</strong> to undo.'
+    title.insertAdjacentElement('afterend', help)
+  }
+
+  const pair = app.querySelector('.pinpoint-couplet-children-container')
+  if (pair && !app.querySelector('.cow-key-prompt')) {
+    const prompt = document.createElement('p')
+    prompt.className = 'cow-key-prompt'
+    prompt.textContent = 'Which statement matches your specimen?'
+    pair.insertAdjacentElement('beforebegin', prompt)
+  }
+
+  app.querySelectorAll('.pinpoint-node-next-button').forEach((button) => {
+    relabelButton(button, 'This matches')
+  })
+  app.querySelectorAll('.pinpoint-button-up').forEach((button) => {
+    relabelButton(button, 'Previous step')
+  })
+}
+
+function watchKeyUi() {
+  if (typeof window === 'undefined' || window.__cowKeysHelpWatched) return
+  window.__cowKeysHelpWatched = true
+
+  const run = () => enhanceKeyUi()
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run, { once: true })
+  } else {
+    run()
+  }
+
+  let timer = 0
+  const observer = new MutationObserver(() => {
+    window.clearTimeout(timer)
+    timer = window.setTimeout(run, 40)
+  })
+  observer.observe(document.documentElement, {
+    childList: true,
+    subtree: true
+  })
+}
+
 export default function setup() {
   patchFetch()
+  watchKeyUi()
 }
