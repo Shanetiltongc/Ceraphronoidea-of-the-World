@@ -751,14 +751,34 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   line-height: 1.45;
 }
 
-.pinpoint-tree {
-  font-size: 0.85rem;
-  line-height: 1.4;
-  opacity: 0.9;
+/*
+ * Pinpoint dumps the entire remaining key as a nested .pinpoint-tree under
+ * each choice (~25k chars on the Moser & Krogmann key). WID Guided mode only
+ * shows the current couplet; navigate with Next / Back instead.
+ */
+.pinpoint-node-children-container > .pinpoint-tree {
+  display: none;
+}
+
+.pinpoint-node-next-container {
+  margin: 0.25rem 0 0;
+}
+
+.pinpoint-node-next-button {
+  width: 100%;
+  justify-content: center;
+  border-radius: 0.375rem;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.95rem;
 }
 
 .pinpoint-couplet-children-container {
   gap: 1.25rem;
+}
+
+.pinpoint-node-container,
+.pinpoint-node {
+  min-width: 0;
 }
 
 @media (min-width: 768px) {
