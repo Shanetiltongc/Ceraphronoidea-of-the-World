@@ -577,7 +577,7 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
 }
 
 .cow-keys {
-  max-width: 68rem;
+  max-width: 52rem;
   margin: 0 auto;
   padding: 0 1rem 2.5rem;
 }
@@ -593,7 +593,7 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   position: relative;
   width: 100%;
   max-width: 24rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .cow-keys-search input {
@@ -626,59 +626,139 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.85rem;
 }
 
 .cow-keys-card {
   border: 1px solid var(--tp-base-border);
   background: var(--tp-base-foreground);
   border-radius: 0.5rem;
-  padding: 1.15rem 1.25rem;
+  padding: 1rem 1.15rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
 .prose .cow-keys-card p {
-  margin: 0.35rem 0 0;
+  margin: 0;
 }
 
 .prose a.cow-keys-card__title,
-.prose a.cow-keys-card__scope {
+.prose a.cow-keys-card__scope,
+.prose a.cow-keys-card__doi {
   color: var(--tp-secondary);
   text-decoration: none;
 }
 
 .cow-keys-card__title {
-  font-size: 1.125rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.35;
 }
 
 .cow-keys-card__title:hover,
-.cow-keys-card__scope:hover {
+.cow-keys-card__scope:hover,
+.cow-keys-card__doi:hover {
   text-decoration: underline;
 }
 
 .cow-keys-card__title i,
-.cow-keys-card__scope i,
-.cow-keys-card__citation i {
+.cow-keys-card__scope i {
   font-style: italic;
+}
+
+.cow-keys-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.35;
 }
 
 .cow-keys-card__label {
   color: var(--cow-muted);
-  margin-right: 0.25rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  min-width: 3.5rem;
+}
+
+.cow-keys-card__source {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.65rem;
+}
+
+.cow-keys-card__doi {
+  font-size: 0.85rem;
+  word-break: break-all;
+}
+
+.cow-keys-card__desc {
+  color: var(--cow-muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 
 .cow-keys-card__chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
   font-size: 0.75rem;
   color: var(--cow-muted);
 }
 
 .cow-keys-chip {
   border: 1px solid var(--tp-base-border);
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+}
+
+/* Pinpoint key viewer — larger, readable couplet figures (default is 128×128). */
+.pinpoint-figure-list {
+  width: 100%;
+  justify-content: center;
+  gap: 1rem;
+  margin: 0.25rem 0 0.5rem;
+}
+
+.pinpoint-figure-button {
+  width: 100%;
+  max-width: 100%;
+}
+
+.pinpoint-figure {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: min(48vh, 26rem);
+  border: 1px solid var(--tp-base-border);
   border-radius: 0.25rem;
-  padding: 0.125rem 0.5rem;
+  background: #fff;
+  object-fit: contain;
+}
+
+.pinpoint-node {
+  gap: 0.75rem;
+}
+
+.pinpoint-node-text,
+.pinpoint-lead-text {
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+.pinpoint-tree {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.pinpoint-couplet-children-container {
+  gap: 1.25rem;
 }
 
 @media (min-width: 768px) {
@@ -687,4 +767,7 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
     margin-right: -1.5rem;
   }
 
+  .pinpoint-figure {
+    max-height: min(52vh, 30rem);
+  }
 }

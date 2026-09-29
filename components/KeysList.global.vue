@@ -39,8 +39,8 @@
           :to="`/keys/${key.id}`"
           v-html="key.titleHtml"
         />
-        <p v-if="key.scope" class="cow-keys-card__row">
-          <span class="cow-keys-card__label">Scope:</span>
+        <p v-if="key.scope" class="cow-keys-card__meta">
+          <span class="cow-keys-card__label">Scope</span>
           <RouterLink
             v-if="key.otuId"
             class="cow-keys-card__scope"
@@ -54,12 +54,20 @@
           <span v-else-if="key.scopeHtml" v-html="key.scopeHtml" />
           <span v-else>{{ key.scope }}</span>
         </p>
-        <p v-if="key.citationHtml" class="cow-keys-card__row">
-          <span class="cow-keys-card__label">Primary source:</span>
-          <span class="cow-keys-card__citation" v-html="key.citationHtml" />
+        <p v-if="key.sourceLabel || key.doiUrl" class="cow-keys-card__meta">
+          <span class="cow-keys-card__label">Source</span>
+          <span class="cow-keys-card__source">
+            <span v-if="key.sourceLabel">{{ key.sourceLabel }}</span>
+            <a
+              v-if="key.doiUrl"
+              class="cow-keys-card__doi"
+              :href="key.doiUrl"
+              target="_blank"
+              rel="noopener"
+            >{{ key.doiDisplay }}</a>
+          </span>
         </p>
-        <p v-if="key.description" class="cow-keys-card__row">
-          <span class="cow-keys-card__label">Description:</span>
+        <p v-if="key.description" class="cow-keys-card__desc">
           {{ key.description }}
         </p>
         <div class="cow-keys-card__chips">
@@ -133,22 +141,66 @@ function rankIndex(rank) {
   return idx < 0 ? Number.POSITIVE_INFINITY : idx
 }
 
-function citationHtml(citation) {
-  if (!citation) return null
-  if (typeof citation === 'string') return citation
-  return (
+function citationPlain(citation) {
+  if (!citation) return ''
+  if (typeof citation === 'string') return stripTags(citation)
+  return stripTags(
     citation.object_tag ||
-    citation.cached ||
-    citation.full_citation ||
-    null
+      citation.cached ||
+      citation.full_citation ||
+      ''
   )
+}
+
+/** Short index label: "Author, Year" — full citation lives in key Metadata. */
+function shortSourceLabel(plain) {
+  const text = String(plain || '').replace(/\s+/g, ' ').trim()
+  if (!text) return null
+  const match = text.match(
+    /^(.+?)\s*\((\d{4}[a-z]?)\)/
+  )
+  if (match) {
+    let authors = match[1].trim().replace(/\s*,\s*$/, '')
+    authors = authors.replace(/\s+&\s+/g, ' & ')
+    return `${authors}, ${match[2]}`
+  }
+  return text.length > 80 ? `${text.slice(0, 77)}…` : text
+}
+
+function extractDoi(plain) {
+  const text = String(plain || '')
+  const match = text.match(
+    /(?:https?:\/\/(?:dx\.)?doi\.org\/|doi:\s*)(\S+)/i
+  )
+  if (!match) return { doiUrl: null, doiDisplay: null }
+  const doi = match[1].replace(/[.,;)\]]+$/, '')
+  return {
+    doiUrl: `https://doi.org/${doi}`,
+    doiDisplay: `doi:${doi}`
+  }
+}
+
+/** Keep only short, public blurbs — drop draft / license / attach notes. */
+function publicDescription(value) {
+  const text = String(value || '').replace(/\s+/g, ' ').trim()
+  if (!text) return null
+  if (/to be attached|confirm on PDF|CC BY-NC|draft|TODO/i.test(text)) {
+    return null
+  }
+  if (text.length > 160) return `${text.slice(0, 157)}…`
+  return text
 }
 
 const filtered = computed(() => {
   const needle = query.value.trim().toLowerCase()
   if (!needle) return keys.value
   return keys.value.filter((key) =>
-    [stripTags(key.titleHtml || key.title), stripTags(key.scopeHtml || key.scope), key.description || '']
+    [
+      stripTags(key.titleHtml || key.title),
+      stripTags(key.scopeHtml || key.scope),
+      key.sourceLabel || '',
+      key.description || ''
+    ]
       .join(' ')
       .toLowerCase()
       .includes(needle)
@@ -213,6 +265,8 @@ onMounted(async () => {
         const meta = metadata[index]
         const scopeHtml = otuNames.get(lead.otu_id) || null
         const title = meta.title || lead.text || `Key ${lead.id}`
+        const citation = citationPlain(meta.origin_citation)
+        const { doiUrl, doiDisplay } = extractDoi(citation)
         return {
           id: lead.id,
           title,
@@ -221,8 +275,10 @@ onMounted(async () => {
           otuId: lead.otu_id || null,
           scopeHtml,
           scopeRankIdx: otuRanks.get(lead.otu_id) ?? Number.POSITIVE_INFINITY,
-          citationHtml: citationHtml(meta.origin_citation),
-          description: lead.description || null,
+          sourceLabel: shortSourceLabel(citation),
+          doiUrl,
+          doiDisplay,
+          description: publicDescription(lead.description),
           coupletsCount: lead.couplets_count || null,
           taxaCount: lead.otus_count
             ? Math.max(0, lead.otus_count - (lead.otu_id ? 1 : 0))
