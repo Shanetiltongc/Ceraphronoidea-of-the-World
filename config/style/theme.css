@@ -734,39 +734,181 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   line-height: 1.4;
 }
 
-/* Pinpoint key viewer. Its own CSS loads later at the same specificity and
-   forces 128×128 thumbs plus a nested remaining-key tree — beat both. */
-.pinpoint-app .pinpoint-figure-list {
-  width: 100%;
-  justify-content: center;
-  gap: 1rem;
-  margin: 0.25rem 0 0.5rem;
+/* Pinpoint key viewer. Its own CSS loads later and forces 128×128 thumbs
+   plus a nested remaining-key tree — beat both. Two choice cards, each
+   with its own (a) or (aa) plate. */
+.pinpoint-app {
+  font-family: var(--tp-font-main);
+  color: var(--tp-base-content);
+  margin-bottom: 3rem;
 }
 
-.pinpoint-app .pinpoint-figure-button {
-  width: 100%;
-  max-width: 100%;
+.pinpoint-app .pinpoint-key-title h1 {
+  font-family: var(--cow-font-display);
+  font-weight: 600;
+  font-size: 1.65rem;
+  line-height: 1.25;
+  color: var(--tp-base-content);
+  text-wrap: balance;
 }
 
-.pinpoint-app .pinpoint-figure {
-  width: 100% !important;
-  max-width: 100%;
-  height: auto !important;
-  max-height: min(52vh, 32rem);
+.pinpoint-app .pinpoint-previous-couplets {
+  display: none !important;
+}
+
+.pinpoint-app .pinpoint-couplet-node {
+  margin: 0 auto 0.85rem;
+  max-width: 40rem;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  text-align: center;
+  color: var(--cow-muted);
+  font-size: 0.9rem;
+}
+
+.pinpoint-app .pinpoint-couplet-node h1 {
+  margin: 0;
+  border: 0;
+  font-family: var(--tp-font-main);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cow-muted);
+}
+
+.pinpoint-app .pinpoint-node-text a,
+.pinpoint-app .pinpoint-lead-text a,
+.pinpoint-app .pinpoint-node-target a {
+  font-family: var(--cow-font-display);
+  font-style: italic;
+  color: var(--tp-base-content);
+  text-decoration: none;
+}
+
+.pinpoint-app .pinpoint-node-text a:hover,
+.pinpoint-app .pinpoint-lead-text a:hover,
+.pinpoint-app .pinpoint-node-target a:hover {
+  color: var(--cow-muted);
+}
+
+.pinpoint-app .pinpoint-couplet-node .pinpoint-figure-list {
+  display: none;
+}
+
+.pinpoint-app .pinpoint-couplet-children-container {
+  display: grid !important;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 16.5rem auto auto auto 16.5rem auto auto;
+  column-gap: 1.25rem;
+  row-gap: 0.75rem;
+  align-items: stretch;
+}
+
+.pinpoint-app .pinpoint-node-container {
+  display: grid !important;
+  grid-template-rows: subgrid;
+  grid-column: 1;
+  min-width: 0;
+  background: var(--tp-base-foreground);
   border: 1px solid var(--tp-base-border);
-  border-radius: 0.25rem;
-  background: #fff;
-  object-fit: contain;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  row-gap: 0.75rem;
+}
+
+.pinpoint-app .pinpoint-node-container:nth-child(1) {
+  grid-row: 1 / span 4;
+}
+
+.pinpoint-app .pinpoint-node-container:nth-child(2) {
+  grid-row: 5 / span 4;
 }
 
 .pinpoint-app .pinpoint-node {
-  gap: 0.75rem;
+  display: contents;
 }
 
 .pinpoint-app .pinpoint-node-text,
 .pinpoint-app .pinpoint-lead-text {
+  font-family: var(--tp-font-main);
   font-size: 1.05rem;
   line-height: 1.45;
+  color: var(--tp-base-content);
+}
+
+.pinpoint-app .cow-lead-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.35rem;
+  min-height: 3.2rem;
+}
+
+.pinpoint-app .pinpoint-node-text,
+.pinpoint-app .pinpoint-node-target {
+  margin: 0;
+}
+
+.pinpoint-app .pinpoint-figure-list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  gap: 0.65rem;
+  margin: 0;
+}
+
+.pinpoint-app .pinpoint-figure-button {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.75rem;
+  background: #fff;
+  border: 1px solid var(--tp-base-border);
+  border-radius: 0.25rem;
+}
+
+.pinpoint-app .pinpoint-figure-button:has(.cow-figure-couplet),
+.pinpoint-app .pinpoint-figure-button:not(:has(.cow-figure-habitus)) {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  height: auto;
+}
+
+.pinpoint-app .pinpoint-figure {
+  width: auto !important;
+  max-width: 100%;
+  height: auto !important;
+  max-height: 100% !important;
+  border: 0 !important;
+  background: transparent;
+  object-fit: contain;
+}
+
+.pinpoint-app .cow-habitus-row {
+  display: flex;
+  gap: 0.5rem;
+  min-height: 0;
+}
+
+.pinpoint-app .cow-habitus-row:not(:empty) .pinpoint-figure-button {
+  flex: 1;
+  height: 6.5rem;
+  min-height: 6.5rem;
+  padding: 0.35rem;
+}
+
+.pinpoint-app .cow-figure-habitus {
+  max-height: 5.75rem !important;
 }
 
 .pinpoint-app .pinpoint-tree,
@@ -780,25 +922,54 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   padding: 0 !important;
 }
 
+.pinpoint-app .pinpoint-node-children-container {
+  margin: 0;
+  min-height: 0;
+}
+
 .pinpoint-app .pinpoint-node-next-container {
-  margin: 0.25rem 0 0;
+  margin: 0;
+  height: 100%;
 }
 
-.pinpoint-app .pinpoint-node-next-button {
-  width: 100%;
+.pinpoint-app .cow-taxon-link,
+.pinpoint-app .pinpoint-node-next-button,
+.pinpoint-app .pinpoint-button-up {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 2.75rem;
+  min-height: 2.75rem;
   border-radius: 0.375rem;
-  padding: 0.45rem 0.85rem;
+  padding: 0 0.85rem;
+  font-family: var(--tp-font-main);
   font-size: 0.95rem;
+  text-align: center;
+  text-decoration: none;
+  font-style: normal;
+  background: var(--cow-panel);
+  color: var(--tp-base-content);
+  border: 1px solid var(--tp-base-border);
 }
 
-.pinpoint-app .pinpoint-couplet-children-container {
-  gap: 1.25rem;
+.pinpoint-app .pinpoint-node-next-button .flex,
+.pinpoint-app .pinpoint-button-up .flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+  flex: 0 0 auto;
 }
 
-.pinpoint-app .pinpoint-node-container,
-.pinpoint-app .pinpoint-node {
-  min-width: 0;
+.pinpoint-app .cow-taxon-link:hover,
+.pinpoint-app .pinpoint-node-next-button:hover,
+.pinpoint-app .pinpoint-button-up:hover {
+  background: var(--tp-base-muted);
+  color: var(--tp-base-content);
 }
 
 @media (min-width: 768px) {
@@ -807,7 +978,18 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
     margin-right: -1.5rem;
   }
 
-  .pinpoint-app .pinpoint-figure {
-    max-height: min(56vh, 36rem);
+  .pinpoint-app .pinpoint-couplet-children-container {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 16.5rem auto auto;
+    column-gap: 1.25rem;
+  }
+
+  .pinpoint-app .pinpoint-node-container:nth-child(1),
+  .pinpoint-app .pinpoint-node-container:nth-child(2) {
+    grid-row: 1 / span 4;
+  }
+
+  .pinpoint-app .pinpoint-node-container:nth-child(2) {
+    grid-column: 2;
   }
 }
