@@ -1,0 +1,18 @@
+# Taxon page panel layout
+
+taxa_page:
+  overview:
+    panels:
+      - - - 'panel:gallery'
+          - 'panel:type'
+          - 'panel:type-specimen'
+          - 'panel:nomenclature'
+          - 'panel:nomenclature-references'
+
+        - - 'panel:map'
+          - 'panel:descendants'
+          - 'panel:content'
+          - 'panel:keys'
+          - 'panel:sounds'
+
+      - - - 'panel:biological-association-graphs'

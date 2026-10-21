@@ -993,3 +993,123 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
     grid-column: 2;
   }
 }
+
+.cow-bagraph-panel {
+  margin: 0 0 1.25rem;
+  padding: 1rem 1.15rem 1.15rem;
+  border: 1px solid var(--tp-card-border, var(--tp-base-border));
+  border-radius: 0.5rem;
+  background: var(--tp-base-foreground);
+}
+
+.cow-bagraph-panel__heading {
+  font-family: var(--cow-font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+.cow-bagraph {
+  margin: 1rem 0 0.25rem;
+}
+
+.cow-bagraph__title {
+  font-family: var(--cow-font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem;
+}
+
+.cow-bagraph__help,
+.cow-bagraph__status {
+  margin: 0 0 1rem;
+  color: var(--cow-muted);
+  font-size: 0.95rem;
+}
+
+.cow-bagraph__layers {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.65rem 0.85rem;
+  overflow-x: auto;
+  padding: 0.15rem 0 0.35rem;
+}
+
+.cow-bagraph__layer,
+.cow-bagraph__rels {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.cow-bagraph__rel {
+  color: var(--cow-muted);
+  font-size: 0.78rem;
+  text-align: center;
+  max-width: 8rem;
+}
+
+.cow-bagraph__rel::after {
+  content: ' →';
+}
+
+.cow-bagraph__node {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 10rem;
+  max-width: 14rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--tp-card-border, var(--tp-base-border));
+  border-radius: 0.4rem;
+  background: var(--tp-base-muted);
+  color: var(--tp-base-content);
+  text-align: center;
+  text-decoration: none;
+  font-size: 0.82rem;
+  line-height: 1.25;
+  box-sizing: border-box;
+}
+
+.cow-bagraph__node:hover {
+  border-color: var(--tp-base-lighter);
+  color: var(--tp-base-content);
+}
+
+.cow-bagraph__node--current {
+  border-color: var(--tp-base-lighter);
+  box-shadow: 0 0 0 1px var(--tp-base-lighter);
+}
+
+.cow-bagraph__node--plain {
+  cursor: default;
+  opacity: 0.92;
+}
+
+.cow-bagraph-fallback {
+  margin-top: 1rem;
+  overflow-x: auto;
+}
+
+.cow-bagraph-fallback__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.cow-bagraph-fallback__table th,
+.cow-bagraph-fallback__table td {
+  padding: 0.45rem 0.6rem;
+  text-align: left;
+  border-bottom: 1px solid var(--tp-card-border, var(--tp-base-border));
+}
+
+.cow-bagraph-fallback__table th {
+  color: var(--cow-muted);
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
