@@ -539,8 +539,12 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   width: auto;
   max-width: none;
   margin: 0;
-  object-fit: unset;
-  object-position: top center;
+}
+
+.cow-contributor__photo--crop-top img {
+  top: auto;
+  bottom: -38.4%;
+  height: 172%;
 }
 
 .cow-contributor__photo--empty,
@@ -995,36 +999,196 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
 }
 
 .cow-bagraph-panel {
+  width: 100%;
+  max-width: 100%;
   margin: 0 0 1.25rem;
-  padding: 1rem 1.15rem 1.15rem;
+  padding: 0.85rem 10px 0.85rem 1.15rem;
   border: 1px solid var(--tp-card-border, var(--tp-base-border));
   border-radius: 0.5rem;
   background: var(--tp-base-foreground);
+  box-sizing: border-box;
+}
+
+.cow-bagraph-panel--open {
+  padding: 0.85rem 10px 10px 10px;
+}
+
+@media (min-width: 768px) {
+  .cow-bagraph-panel {
+    width: calc((100% - 1rem) / 2);
+  }
+
+  .cow-bagraph-panel:has(.cow-bagraph--open) {
+    width: max-content;
+    min-width: calc((100% - 1rem) / 2);
+    max-width: 100%;
+  }
+}
+
+.cow-bagraph-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+  cursor: pointer;
 }
 
 .cow-bagraph-panel__heading {
-  font-family: var(--cow-font-display);
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin: 0 0 0.5rem;
+  font-family: var(--tp-font-main);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0;
+  flex: 0 1 auto;
+}
+
+.cow-bagraph-panel__json {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+}
+
+.cow-json-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cow-json-wrap ul[role="menu"] {
+  display: none !important;
+}
+
+.cow-json-data {
+  display: none;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: var(--tp-base-content);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cow-json-wrap--open .cow-json-data {
+  display: inline;
+}
+
+.cow-bagraph-panel__header .cow-bagraph__toggle {
+  margin-left: auto;
 }
 
 .cow-bagraph {
+  width: max-content;
+  max-width: 100%;
   margin: 1rem 0 0.25rem;
+  padding: 4px 10px 8px 4px;
+  border: 1px solid var(--tp-card-border, var(--tp-base-border));
+  border-radius: 0.4rem;
+  background: var(--tp-base-muted);
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+
+.cow-bagraph__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0;
+  padding: 0.2rem 0 0.15rem;
+  cursor: pointer;
+}
+
+.cow-bagraph__toggle {
+  flex: 0 0 auto;
+  width: 1.5rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: center;
+  font-size: 1.35rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--tp-base-content);
+  cursor: pointer;
 }
 
 .cow-bagraph__title {
-  font-family: var(--cow-font-display);
-  font-size: 1.05rem;
+  font-family: var(--tp-font-main);
+  font-size: 0.84rem;
   font-weight: 600;
-  margin: 0 0 0.75rem;
+  margin: 0;
+  flex: 1 1 auto;
 }
 
 .cow-bagraph__help,
 .cow-bagraph__status {
-  margin: 0 0 1rem;
+  margin: 0.45rem 0 1rem;
   color: var(--cow-muted);
-  font-size: 0.95rem;
+  font-size: 0.76rem;
+  width: max-content;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.cow-taxon-card .tp-card-header.flex.justify-between {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.cow-taxon-card .tp-card-header h2 {
+  margin: 0;
+  flex: 0 1 auto;
+}
+
+.cow-taxon-card .tp-card-header .relative.inline-flex,
+.cow-taxon-card .tp-card-header .cow-json-wrap {
+  flex: 0 0 auto;
+  margin-left: 0;
+}
+
+.cow-taxon-card .tp-card-header .cow-json-data,
+.cow-bagraph-panel__header .cow-json-data {
+  font-family: var(--tp-font-main);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--tp-base-content);
+}
+
+.cow-taxon-card__toggle {
+  flex: 0 0 auto;
+  margin-left: auto;
+  width: 1.5rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: center;
+  font-size: 1.35rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--tp-base-content);
+  cursor: pointer;
+}
+
+.cow-taxon-card--closed {
+  overflow: hidden;
+}
+
+.cow-taxon-card--closed .tp-card-header {
+  border-bottom-width: 0;
+}
+
+.cow-taxon-card--closed > *:not(.tp-card-header) {
+  display: none;
 }
 
 .cow-bagraph__layers {
@@ -1032,8 +1196,11 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   flex-wrap: nowrap;
   align-items: center;
   gap: 0.65rem 0.85rem;
-  overflow-x: auto;
-  padding: 0.15rem 0 0.35rem;
+  width: max-content;
+  max-width: 100%;
+  margin-top: 0.45rem;
+  padding: 4px 0 4px 4px;
+  overflow: visible;
 }
 
 .cow-bagraph__layer,
@@ -1046,7 +1213,7 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
 
 .cow-bagraph__rel {
   color: var(--cow-muted);
-  font-size: 0.78rem;
+  font-size: 0.62rem;
   text-align: center;
   max-width: 8rem;
 }
@@ -1068,7 +1235,7 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   color: var(--tp-base-content);
   text-align: center;
   text-decoration: none;
-  font-size: 0.82rem;
+  font-size: 0.66rem;
   line-height: 1.25;
   box-sizing: border-box;
 }
@@ -1096,7 +1263,7 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
 .cow-bagraph-fallback__table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-size: 0.72rem;
 }
 
 .cow-bagraph-fallback__table th,
@@ -1109,7 +1276,222 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
 .cow-bagraph-fallback__table th {
   color: var(--cow-muted);
   font-weight: 600;
-  font-size: 0.78rem;
+  font-size: 0.62rem;
   text-transform: uppercase;
   letter-spacing: 0.03em;
+}
+
+.cow-taxon-gallery .cow-gallery-crop {
+  position: relative;
+  overflow: hidden;
+}
+
+.cow-taxon-gallery .cow-gallery-crop--main.h-80,
+.cow-taxon-gallery .cow-gallery-crop--main {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 400px;
+  margin-inline: auto;
+  background: transparent;
+}
+
+.cow-taxon-gallery .cow-gallery-crop img {
+  display: block;
+}
+
+.cow-taxon-gallery .cow-gallery-crop--main img {
+  display: block;
+}
+
+.cow-taxon-gallery .cow-gallery-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 15px calc(15px + 3.0375rem + 15px);
+  border: 0;
+  background: transparent;
+}
+
+.cow-taxon-gallery .cow-gallery-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.0375rem;
+  height: 3.0375rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--tp-base-content);
+  font-size: 2.2275rem;
+  line-height: 1;
+  opacity: 1;
+  cursor: pointer;
+  text-shadow: none;
+  filter: none;
+}
+
+.cow-taxon-gallery .cow-gallery-nav--prev {
+  left: 15px;
+}
+
+.cow-taxon-gallery .cow-gallery-nav--next {
+  right: 15px;
+}
+
+.cow-taxon-gallery .cow-gallery-nav:hover {
+  opacity: 1;
+  text-shadow: none;
+  filter: none;
+}
+
+.dark .cow-taxon-gallery .cow-gallery-nav,
+.dark [aria-label="Image viewer"] button[title="Previous image"],
+.dark [aria-label="Image viewer"] button[title="Next image"] {
+  color: var(--tp-base-content);
+  background: transparent;
+}
+
+[aria-label="Image viewer"] button[title="Previous image"],
+[aria-label="Image viewer"] button[title="Next image"] {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--tp-base-content);
+  font-size: 2rem;
+  line-height: 1;
+  opacity: 1;
+  cursor: pointer;
+  text-shadow: none;
+  filter: none;
+}
+
+[aria-label="Image viewer"] button[title="Previous image"]:hover,
+[aria-label="Image viewer"] button[title="Next image"]:hover {
+  opacity: 1;
+  color: var(--tp-base-content);
+}
+
+[aria-label="Image viewer"] button[title="Previous image"] svg,
+[aria-label="Image viewer"] button[title="Next image"] svg {
+  display: none;
+}
+
+[aria-label="Image viewer"] button[title="Previous image"]::before {
+  content: '‹';
+}
+
+[aria-label="Image viewer"] button[title="Next image"]::before {
+  content: '›';
+}
+
+.cow-taxon-gallery .flex.flex-row.overflow-x-auto {
+  overflow-y: visible;
+  gap: 6px;
+  padding: 4px 2px;
+  margin: 0 -2px;
+}
+
+.cow-taxon-gallery .tp-card:has(.cow-gallery-stage) .flex.flex-row.overflow-x-auto {
+  box-sizing: border-box;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  padding: 4px 8px;
+  overflow-x: auto;
+  overflow-y: visible;
+  justify-content: flex-start;
+}
+
+.cow-taxon-gallery .cow-gallery-num.w-24 {
+  box-sizing: border-box;
+  width: fit-content;
+  min-width: 0;
+  max-width: none;
+  height: fit-content;
+  min-height: 0;
+  max-height: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  outline: none;
+  color: var(--tp-base-content);
+}
+
+.cow-taxon-gallery .cow-gallery-num img {
+  display: none;
+}
+
+.cow-taxon-gallery .cow-gallery-num__label {
+  font-size: calc(0.75rem * 1.33);
+  font-weight: 600;
+  line-height: 1;
+  padding: 0;
+}
+
+.cow-taxon-gallery .cow-gallery-num.w-24.cow-gallery-num--current {
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  outline: none;
+  color: var(--tp-base-content);
+}
+
+.cow-taxon-gallery .cow-gallery-num--current .cow-gallery-num__label {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--tp-base-content);
+}
+
+.cow-taxon-gallery .tp-card:has(.cow-gallery-stage) > .tp-card-content {
+  padding-bottom: 10px;
+}
+
+.tp-footer-citation,
+.tp-footer-citation a,
+.cow-footer-cite__url {
+  font-family: var(--tp-font-main);
+  font-size: inherit;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: var(--tp-footer-content);
+}
+
+.tp-footer-citation a,
+.cow-footer-cite__url {
+  text-decoration: none;
+}
+
+.tp-footer-citation a:hover,
+.cow-footer-cite__url:hover {
+  color: var(--tp-footer-link-hover);
+  text-decoration: underline;
+}
+
+.tp-footer-copyright {
+  display: none;
 }

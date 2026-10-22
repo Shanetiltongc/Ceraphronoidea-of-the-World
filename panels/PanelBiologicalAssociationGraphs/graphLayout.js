@@ -13,6 +13,23 @@ function citationText(edge) {
   return ''
 }
 
+export function citationYear(text) {
+  const value = String(text || '')
+  const paren = value.match(/\((\d{4})\)/)
+  if (paren) return Number(paren[1])
+  const bare = value.match(/\b(1[0-9]{3}|20[0-9]{2})\b/)
+  return bare ? Number(bare[1]) : Number.POSITIVE_INFINITY
+}
+
+export function compareByCitationYear(a, b) {
+  const yearA = citationYear(a)
+  const yearB = citationYear(b)
+  if (yearA !== yearB) return yearA - yearB
+  return String(a || '').localeCompare(String(b || ''), undefined, {
+    sensitivity: 'base'
+  })
+}
+
 export function uniqueCitations(links) {
   const seen = new Set()
   const out = []

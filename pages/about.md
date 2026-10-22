@@ -1,7 +1,6 @@
 ---
 title: About
 contact_email: Istvan.Miko@unh.edu
-copyright: Except where otherwise noted, content on this site is licensed under the Creative Commons Attribution License (CC-BY). Images are by default open-access under the terms of the CC BY-NC-SA license, unless stated otherwise.
 citation: Ceraphronoidea of the World. Taxon pages served from TaxonWorks.
 layout: fullwidth
 ---
@@ -41,7 +40,9 @@ Nomenclature follows Johnson &amp; Musetti (2004), <i>Catalog of Systematic Lite
 </div>
 
 <div class="cow-contributor">
-<div class="cow-contributor__photo cow-contributor__photo--empty" aria-hidden="true">Photo</div>
+<div class="cow-contributor__photo cow-contributor__photo--crop-top">
+<img src="/images/istvan-miko-photo.webp" alt="István Mikó" />
+</div>
 <div class="cow-contributor__body">
 <h3>István Mikó</h3>
 <p class="cow-contributor__role">Collections Manager, UNH Collection of Insects and Other Arthropods</p>
@@ -84,11 +85,5 @@ Office: Spaulding Hall, Room 201m, Durham, NH 03824
 <h2>Technical</h2>
 
 <p>Built with <a href="https://github.com/SpeciesFileGroup/taxonpages">TaxonPages</a>. Source and deployment: <a href="https://github.com/Shanetiltongc/Ceraphronoidea-of-the-World">Ceraphronoidea of the World</a>.</p>
-
-<h2>Terms of use</h2>
-
-<p>Except where otherwise noted, content on this site is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution License (CC-BY)</a>.</p>
-
-<p>Images are by default open-access under the terms of the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a> license, unless stated otherwise.</p>
 
 </div>

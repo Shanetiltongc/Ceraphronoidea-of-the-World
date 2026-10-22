@@ -2,8 +2,39 @@
   <section
     v-if="isLoading || errorMessage || graphs.length || leftover.length"
     class="cow-bagraph-panel"
+    :class="{ 'cow-bagraph-panel--open': panelOpen }"
   >
-    <h2 class="cow-bagraph-panel__heading">Biological associations</h2>
+    <div
+      class="cow-bagraph-panel__header"
+      @click="togglePanel"
+    >
+      <h2 class="cow-bagraph-panel__heading">
+        Biological associations{{
+          associationCount == null ? '' : ` (${associationCount})`
+        }}
+      </h2>
+      <div
+        class="cow-bagraph-panel__json"
+        @click.stop
+      >
+        <PanelDropdown
+          panel-key="panel:biological-association-graphs"
+          :menu-options="[]"
+        />
+      </div>
+      <button
+        type="button"
+        class="cow-bagraph__toggle"
+        :aria-expanded="panelOpen"
+        :aria-label="
+          panelOpen ? 'Hide biological associations' : 'Show biological associations'
+        "
+        @click.stop="togglePanel"
+      >
+        {{ panelOpen ? '−' : '+' }}
+      </button>
+    </div>
+    <div v-show="panelOpen">
     <p v-if="isLoading" class="cow-bagraph__status">Loading associations…</p>
     <p v-else-if="errorMessage" class="cow-bagraph__status">{{ errorMessage }}</p>
     <p v-else class="cow-bagraph__help">
@@ -14,9 +45,31 @@
       v-for="graph in graphs"
       :key="graph.id"
       class="cow-bagraph"
+      :class="{ 'cow-bagraph--open': isOpen(graph.id) }"
     >
-      <h3 v-if="graph.citation" class="cow-bagraph__title">{{ graph.citation }}</h3>
-      <div class="cow-bagraph__layers">
+      <div
+        class="cow-bagraph__header"
+        @click="toggleGraph(graph.id)"
+      >
+        <h3 class="cow-bagraph__title">
+          {{ graph.citation || 'Association graph' }}
+        </h3>
+        <button
+          type="button"
+          class="cow-bagraph__toggle"
+          :aria-expanded="isOpen(graph.id)"
+          :aria-label="
+            isOpen(graph.id) ? 'Hide association chain' : 'Show association chain'
+          "
+          @click.stop="toggleGraph(graph.id)"
+        >
+          {{ isOpen(graph.id) ? '−' : '+' }}
+        </button>
+      </div>
+      <div
+        v-show="isOpen(graph.id)"
+        class="cow-bagraph__layers"
+      >
         <template
           v-for="(layer, index) in graph.layout.layers"
           :key="`${graph.id}-layer-${index}`"
@@ -80,14 +133,18 @@
         </tbody>
       </table>
     </div>
+    </div>
   </section>
 </template>
 
 <script setup>
 import { onBeforeUnmount, ref, watch } from 'vue'
 import { makeAPIRequest } from '@/utils'
+import { useOtuPageRequest } from '@/modules/otus/helpers/useOtuPageRequest'
+import PanelDropdown from '@/modules/otus/components/Panel/PanelDropdown.vue'
 import {
   citationFromGraphName,
+  compareByCitationYear,
   formatTaxonLabel,
   layoutAssociationGraph,
   linksBetween,
@@ -103,9 +160,27 @@ const props = defineProps({
 
 const graphs = ref([])
 const leftover = ref([])
+const opened = ref({})
+const panelOpen = ref(false)
 const isLoading = ref(false)
 const errorMessage = ref('')
+const associationCount = ref(null)
 let controller = null
+
+function isOpen(id) {
+  return opened.value[id] === true
+}
+
+function toggleGraph(id) {
+  opened.value = {
+    ...opened.value,
+    [id]: !isOpen(id)
+  }
+}
+
+function togglePanel() {
+  panelOpen.value = !panelOpen.value
+}
 
 const associationParams = {
   per: 200,
@@ -137,6 +212,7 @@ async function loadGraphs(otuId) {
   if (!otuId) {
     graphs.value = []
     leftover.value = []
+    associationCount.value = null
     isLoading.value = false
     errorMessage.value = ''
     return
@@ -147,26 +223,31 @@ async function loadGraphs(otuId) {
   errorMessage.value = ''
   graphs.value = []
   leftover.value = []
+  associationCount.value = null
 
   try {
-    const { data: associations } = await makeAPIRequest.get(
-      '/biological_associations/basic',
-      {
-        signal: controller.signal,
-        params: {
-          ...associationParams,
-          'otu_query[coordinatify]': true,
-          'otu_query[otu_id][]': otuId
-        }
-      }
+    const { data: associations, headers } = await useOtuPageRequest(
+      'panel:biological-association-graphs',
+      () =>
+        makeAPIRequest.get('/biological_associations/basic', {
+          signal: controller.signal,
+          params: {
+            ...associationParams,
+            'otu_query[coordinatify]': true,
+            'otu_query[otu_id][]': otuId
+          }
+        })
     )
 
     const baIds = [
       ...new Set((associations || []).map((row) => row.id).filter(Boolean))
     ]
+    const total = Number(headers?.['pagination-total'])
+    associationCount.value = Number.isFinite(total) ? total : baIds.length
     if (!baIds.length) {
       graphs.value = []
       leftover.value = []
+      associationCount.value = 0
       return
     }
 
@@ -238,7 +319,12 @@ async function loadGraphs(otuId) {
       })
     )
 
-    graphs.value = detailed.filter((graph) => graph.layout.nodes.length)
+    graphs.value = detailed
+      .filter((graph) => graph.layout.nodes.length)
+      .sort(
+        (a, b) =>
+          compareByCitationYear(a.citation, b.citation) || a.id - b.id
+      )
     leftover.value = (associations || [])
       .filter((row) => row?.id && !usedIds.has(row.id))
       .map((row) => ({
@@ -248,10 +334,15 @@ async function loadGraphs(otuId) {
         relationship: row.relationship || '',
         citation: citationOf(row)
       }))
+      .sort(
+        (a, b) =>
+          compareByCitationYear(a.citation, b.citation) || a.id - b.id
+      )
   } catch (error) {
     if (error?.name !== 'CanceledError' && error?.code !== 'ERR_CANCELED') {
       graphs.value = []
       leftover.value = []
+      associationCount.value = null
       errorMessage.value = 'Biological associations could not be loaded.'
     }
   } finally {
