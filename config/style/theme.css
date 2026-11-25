@@ -798,37 +798,39 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   color: var(--cow-muted);
 }
 
-.pinpoint-app .pinpoint-couplet-node .pinpoint-figure-list {
-  display: none;
+.pinpoint-app .pinpoint-couplet-node .pinpoint-figure-list,
+.pinpoint-app .pinpoint-couplet-node .pinpoint-figure-button,
+.pinpoint-app .pinpoint-couplet-node .cow-habitus-row,
+.pinpoint-app .pinpoint-couplet-node .pinpoint-figure {
+  display: none !important;
 }
 
 .pinpoint-app .pinpoint-couplet-children-container {
   display: grid !important;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 16.5rem auto auto auto 16.5rem auto auto;
+  grid-template-columns: 1fr !important;
+  grid-template-rows: none !important;
   column-gap: 1.25rem;
   row-gap: 0.75rem;
   align-items: stretch;
+  height: auto !important;
 }
 
 .pinpoint-app .pinpoint-node-container {
-  display: grid !important;
-  grid-template-rows: subgrid;
-  grid-column: 1;
+  display: flex !important;
+  flex-direction: column;
+  align-items: stretch;
+  grid-row: auto !important;
+  grid-column: auto;
   min-width: 0;
+  min-height: min-content;
+  overflow: visible;
+  height: auto !important;
+  max-height: none !important;
   background: var(--tp-base-foreground);
   border: 1px solid var(--tp-base-border);
   border-radius: 0.5rem;
   padding: 1rem;
-  row-gap: 0.75rem;
-}
-
-.pinpoint-app .pinpoint-node-container:nth-child(1) {
-  grid-row: 1 / span 4;
-}
-
-.pinpoint-app .pinpoint-node-container:nth-child(2) {
-  grid-row: 5 / span 4;
+  gap: 0.75rem;
 }
 
 .pinpoint-app .pinpoint-node {
@@ -861,27 +863,42 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   flex-direction: column;
   align-items: stretch;
   width: 100%;
-  height: 100%;
+  height: auto;
   min-height: 0;
+  max-height: none;
+  overflow: visible;
   gap: 0.65rem;
   margin: 0;
 }
 
+.pinpoint-app .pinpoint-figure-list:has(.pinpoint-figure-button:nth-child(2)) {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.65rem;
+}
+
 .pinpoint-app .pinpoint-figure-button {
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 100%;
+  height: auto;
+  min-height: 0;
+  overflow: hidden;
   margin: 0;
-  padding: 0.75rem;
-  background: #fff;
-  border: 1px solid var(--tp-base-border);
+  padding: 0.35rem;
+  background: color-mix(in srgb, var(--tp-base-content) 6%, transparent);
+  border: 0;
   border-radius: 0.25rem;
 }
 
 .pinpoint-app .pinpoint-figure-button:has(.cow-figure-couplet),
 .pinpoint-app .pinpoint-figure-button:not(:has(.cow-figure-habitus)) {
   display: flex;
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: center;
   min-height: 0;
@@ -889,13 +906,14 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
 }
 
 .pinpoint-app .pinpoint-figure {
-  width: auto !important;
+  width: 100% !important;
   max-width: 100%;
   height: auto !important;
-  max-height: 100% !important;
+  max-height: 32rem !important;
   border: 0 !important;
   background: transparent;
   object-fit: contain;
+  object-position: center;
 }
 
 .pinpoint-app .cow-habitus-row {
@@ -933,7 +951,12 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
 
 .pinpoint-app .pinpoint-node-next-container {
   margin: 0;
-  height: 100%;
+  height: auto;
+  flex: 0 0 auto;
+}
+
+.pinpoint-app .cow-taxon-link {
+  cursor: pointer;
 }
 
 .pinpoint-app .cow-taxon-link,
@@ -983,14 +1006,14 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   }
 
   .pinpoint-app .pinpoint-couplet-children-container {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 16.5rem auto auto;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: none !important;
     column-gap: 1.25rem;
   }
 
   .pinpoint-app .pinpoint-node-container:nth-child(1),
   .pinpoint-app .pinpoint-node-container:nth-child(2) {
-    grid-row: 1 / span 4;
+    grid-row: auto !important;
   }
 
   .pinpoint-app .pinpoint-node-container:nth-child(2) {
@@ -1002,7 +1025,7 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   width: 100%;
   max-width: 100%;
   margin: 0 0 1.25rem;
-  padding: 0.85rem 10px 0.85rem 1.15rem;
+  padding: 0;
   border: 1px solid var(--tp-card-border, var(--tp-base-border));
   border-radius: 0.5rem;
   background: var(--tp-base-foreground);
@@ -1010,7 +1033,7 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
 }
 
 .cow-bagraph-panel--open {
-  padding: 0.85rem 10px 10px 10px;
+  padding: 0;
 }
 
 @media (min-width: 768px) {
@@ -1030,8 +1053,14 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   align-items: center;
   justify-content: flex-start;
   gap: 10px;
+  box-sizing: border-box;
   width: 100%;
+  padding: 0.875rem 1.25rem;
   cursor: pointer;
+}
+
+.cow-bagraph-panel__body {
+  padding: 0.85rem 1.25rem 1.25rem;
 }
 
 .cow-bagraph-panel__heading {
@@ -1078,7 +1107,7 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   display: inline;
 }
 
-.cow-bagraph-panel__header .cow-bagraph__toggle {
+.cow-bagraph-panel__header .cow-taxon-card__toggle {
   margin-left: auto;
 }
 

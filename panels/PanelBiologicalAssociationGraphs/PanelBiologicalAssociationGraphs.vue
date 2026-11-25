@@ -24,7 +24,7 @@
       </div>
       <button
         type="button"
-        class="cow-bagraph__toggle"
+        class="cow-taxon-card__toggle"
         :aria-expanded="panelOpen"
         :aria-label="
           panelOpen ? 'Hide biological associations' : 'Show biological associations'
@@ -34,7 +34,10 @@
         {{ panelOpen ? '−' : '+' }}
       </button>
     </div>
-    <div v-show="panelOpen">
+    <div
+      v-show="panelOpen"
+      class="cow-bagraph-panel__body"
+    >
     <p v-if="isLoading" class="cow-bagraph__status">Loading associations…</p>
     <p v-else-if="errorMessage" class="cow-bagraph__status">{{ errorMessage }}</p>
     <p v-else class="cow-bagraph__help">
