@@ -157,7 +157,12 @@ function citationPlain(citation) {
 
 /** Short index label: "Author, Year" — full citation lives in key Metadata. */
 function shortSourceLabel(plain) {
-  const text = String(plain || '').replace(/\s+/g, ' ').trim()
+  const text = String(plain || '')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/\s+/g, ' ')
+    .trim()
   if (!text) return null
   const match = text.match(
     /^(.+?)\s*\((\d{4}[a-z]?)\)/

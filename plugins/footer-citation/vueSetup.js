@@ -36,7 +36,22 @@ function fillCitation(el, name, url, accessed) {
   el.dataset.cowCite = `${url}|${name}|${accessed}`
 }
 
+function pageHeading() {
+  const heading = document.querySelector('#main-content h1, main h1')
+  return heading?.textContent.replace(/\s+/g, ' ').trim() || ''
+}
+
+function updateDocumentTitle() {
+  const hash = window.location.hash || '#/'
+  if (/#\/otus\/\d+/.test(hash) || /#\/keys\/\d+/.test(hash)) return
+  const heading = pageHeading()
+  const site = 'Ceraphronoidea of the World'
+  document.title =
+    heading && heading !== site ? `${site} - ${heading}` : site
+}
+
 function updateFooter() {
+  updateDocumentTitle()
   const citation = document.querySelector('.tp-footer-citation')
   if (!citation) return
 

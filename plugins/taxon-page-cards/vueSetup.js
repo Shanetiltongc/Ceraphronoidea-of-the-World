@@ -1,5 +1,7 @@
 const CARD_TITLE =
-  /^(Nomenclature references|Nomenclature|Descendants and synonyms)\b/
+  /^(Nomenclature references|Nomenclature|Descendants and synonyms|Other Databases)\b/
+
+const START_OPEN = /^(Nomenclature|Other Databases)\b/
 
 function isTargetCard(card) {
   const title = card.querySelector('.tp-card-header h2')
@@ -48,7 +50,8 @@ function enhanceCard(card) {
       if (event.target.closest('.cow-taxon-card__toggle')) return
       toggleCard(card)
     })
-    setClosed(card, true)
+    const title = header.querySelector('h2')?.textContent.trim() || ''
+    setClosed(card, !START_OPEN.test(title))
   }
 }
 

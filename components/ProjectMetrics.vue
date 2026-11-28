@@ -28,7 +28,7 @@ const items = ref([
   { key: 'references', label: 'References', value: '—' },
   { key: 'citations', label: 'Citations', value: '—' },
   { key: 'images', label: 'Images', value: '—' },
-  { key: 'specimens', label: 'Specimen records', value: '—' }
+  { key: 'specimens', label: 'Collection objects', value: '—' }
 ])
 
 function formatCount(value) {
@@ -50,6 +50,36 @@ async function countNames(params) {
   return headerTotal(response)
 }
 
+const SUPERFAMILY = 1541972
+const STIGMA_TN = 1542779
+
+async function countFossilSpecies() {
+  const params = { per: 500 }
+  const [fos, stigma] = await Promise.all([
+    makeAPIRequest.get('/taxon_names', {
+      params: {
+        ...params,
+        'taxon_name_id[]': SUPERFAMILY,
+        descendants: true,
+        'taxon_name_classification[]':
+          'TaxonNameClassification::Iczn::Fossil'
+      }
+    }),
+    makeAPIRequest.get('/taxon_names', {
+      params: {
+        ...params,
+        'taxon_name_id[]': STIGMA_TN,
+        descendants: true
+      }
+    })
+  ])
+  const ids = new Set()
+  ;[...(fos.data || []), ...(stigma.data || [])]
+    .filter((t) => String(t.rank_string || '').endsWith('Species'))
+    .forEach((t) => ids.add(t.id))
+  return ids.size
+}
+
 function setValue(key, value) {
   const row = items.value.find((item) => item.key === key)
   if (row) row.value = formatCount(value)
@@ -60,11 +90,7 @@ onMounted(async () => {
     countNames({ nomenclature_group: 'Species', otus: true }),
     countNames({ nomenclature_group: 'Species' }),
     countNames({ nomenclature_group: 'Genus' }),
-    countNames({
-      nomenclature_group: 'Species',
-      'taxon_name_classification[]':
-        'TaxonNameClassification::Iczn::Fossil'
-    })
+    countFossilSpecies()
   ])
 
   const stats = makeAPIRequest.get('/stats').catch(() => null)

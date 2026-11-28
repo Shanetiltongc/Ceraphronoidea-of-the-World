@@ -40,6 +40,15 @@ Nomenclature follows Johnson &amp; Musetti (2004), <i>Catalog of Systematic Lite
 </div>
 
 <div class="cow-contributor">
+<div class="cow-contributor__photo cow-contributor__photo--empty" aria-hidden="true"></div>
+<div class="cow-contributor__body">
+<h3>Davide Dal Pos</h3>
+<p class="cow-contributor__role">Website tools</p>
+<p>Atlas, hosts and interactions, type catalogue, fossils, specimens, literature, and citation tools.</p>
+</div>
+</div>
+
+<div class="cow-contributor">
 <div class="cow-contributor__photo cow-contributor__photo--crop-top">
 <img src="/images/istvan-miko-photo.webp" alt="István Mikó" />
 </div>

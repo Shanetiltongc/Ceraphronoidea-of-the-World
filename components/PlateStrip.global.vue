@@ -1,9 +1,10 @@
 <template>
-  <section class="cow-strip">
+  <section :class="['cow-strip', compact && 'cow-strip--compact']">
     <img
       class="cow-strip__img"
       :src="resolvedSrc"
       :alt="alt"
+      :style="imgStyle"
     />
     <div class="cow-strip__overlay">
       <slot />
@@ -33,8 +34,13 @@ const props = defineProps({
   citation: { type: String, default: '' },
   credit: { type: String, default: 'Photo by: István Mikó' },
   corner: { type: String, default: 'bottom-left' },
-  metrics: { type: Boolean, default: false }
+  metrics: { type: Boolean, default: false },
+  position: { type: String, default: '' },
+  compact: { type: Boolean, default: false }
 })
 
 const resolvedSrc = computed(() => resolveAssetUrl(props.src, base_url))
+const imgStyle = computed(() =>
+  props.position ? { objectPosition: props.position } : undefined
+)
 </script>

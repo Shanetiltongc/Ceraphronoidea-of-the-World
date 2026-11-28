@@ -42,6 +42,11 @@
     <p v-else-if="errorMessage" class="cow-bagraph__status">{{ errorMessage }}</p>
     <p v-else class="cow-bagraph__help">
       Host chains from the cited paper. Linked names open that taxon page.
+      <router-link
+        v-if="otuId"
+        class="cow-bagraph__web"
+        :to="{ path: '/interactions', query: { taxon: String(otuId) } }"
+      >Open the food web for this taxon</router-link>
     </p>
 
     <div

@@ -1,4 +1,6 @@
 # Taxon page panel layout
+# Nomenclature is the timeline in panels/PanelNames (id panel:nomenclature).
+# Statistics is the external-links panel in panels/PanelExternal (id panel:statistics).
 
 taxa_page:
   overview:
@@ -7,9 +9,9 @@ taxa_page:
           - 'panel:gallery'
           - 'panel:type'
           - 'panel:nomenclature'
-          - 'panel:nomenclature-references'
 
         - - 'panel:map'
+          - 'panel:statistics'
           - 'panel:descendants'
           - 'panel:content'
           - 'panel:keys'

@@ -4,6 +4,8 @@
   Every token below is one of those, not an extra hue.
 */
 
+@import './tools.css';
+
 :root {
   --cow-cream: #f4efe4;
   --cow-brown: #6c5240;
@@ -178,9 +180,11 @@ body,
 /* Ceraphronoidea of the World — homepage figures and About credits */
 
 /* Header logo: Conostigmus tubifer cutout for both themes.
-   82% of header height, pinned to the left and bottom. */
+   82% of header height, pinned to the left and bottom.
+   Overflow stays visible so the Catalogue menu paints over the page. */
 .tp-header {
-  overflow: hidden;
+  z-index: 40;
+  overflow: visible;
 }
 
 .tp-header img {
@@ -386,6 +390,18 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   line-height: 1.15;
 }
 
+.cow-pagehead {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem 0;
+}
+
+.cow-pagehead .cow-lead {
+  margin: 0.35rem 0 0;
+  max-width: 46rem;
+  color: var(--cow-muted);
+}
+
 .cow-search-row {
   margin-top: 0.6rem;
   display: flex;
@@ -492,6 +508,12 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   max-height: none;
   object-fit: contain;
   opacity: 0.8;
+}
+
+.cow-strip--compact .cow-strip__img {
+  height: 14rem;
+  max-height: 14rem;
+  object-fit: cover;
 }
 
 .cow-strip__overlay {
@@ -1166,6 +1188,18 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
   white-space: nowrap;
 }
 
+.cow-bagraph__web {
+  display: inline-block;
+  margin-left: 0.45rem;
+  color: var(--cow-brown);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+.dark .cow-bagraph__web {
+  color: var(--cow-ink);
+}
+
 .cow-taxon-card .tp-card-header.flex.justify-between {
   display: flex;
   align-items: center;
@@ -1523,4 +1557,37 @@ body:has(.cow-search-row) .tp-header .container > a:first-child > span {
 
 .tp-footer-copyright {
   display: none;
+}
+
+/*
+  Species maps use Leaflet's #ddd canvas. Dark mode filters the tiles
+  and leaves that canvas as a light band wherever the world tile
+  does not cover the frame. Paint the canvas the ocean color, and
+  run the same tile filter over it in dark mode.
+*/
+.leaflet-container.h-96 {
+  background: #aad3df;
+}
+
+.leaflet-container.h-96 .leaflet-control-attribution {
+  background: rgb(23 36 48 / 0.88);
+  color: #e7dfd0;
+  font-size: 0.62rem;
+  line-height: 1.35;
+  max-width: 14rem;
+  white-space: normal;
+}
+
+.leaflet-container.h-96 .leaflet-control-attribution a {
+  color: #f4efe4;
+}
+
+/* The package filter is applied to the tile layer and leaves a
+   hairline at every tile edge. These maps use a dark basemap instead. */
+.dark .leaflet-container.h-96 {
+  background: #262626;
+}
+
+.dark .leaflet-container.h-96 .map-tiles {
+  filter: none;
 }
